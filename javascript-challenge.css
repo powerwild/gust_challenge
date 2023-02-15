@@ -84,3 +84,9 @@ form[kjs-type=extendingForm] [kjs-role=extension] {
     display: none; }
   [kjs-type=tabs] [kjs-role=content] img {
     width: 100%; }
+[kjs-type=dependentCheckboxes] > div {
+  margin: 5px 0;
+  width: 100%;
+  padding: 12px;
+  background-color: #C3EBEE;
+}

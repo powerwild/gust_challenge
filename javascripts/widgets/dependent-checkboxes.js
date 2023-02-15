@@ -5,9 +5,7 @@ function dependentCheckboxes(widget) {
         mainBox.indeterminate = false;
         subBoxes.forEach((box) => box.checked = mainBox.checked);
     }
-    function handleSubBoxes(e) {
-        e.stopPropagation();
-        e.target.checked = !e.target.checked;
+    function handleSubBoxes() {
         let count = 0;
         subBoxes.forEach((box) => {
             if (box.checked) ++count;
@@ -39,5 +37,5 @@ function dependentCheckboxes(widget) {
         })
     });
     return {actions};
-}
+};
 module.exports = dependentCheckboxes;

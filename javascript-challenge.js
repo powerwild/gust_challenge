@@ -18,6 +18,7 @@ function kjs(constructors, page) {
   var widgetElements = page.querySelectorAll('[kjs-type]');
   widgetElements.forEach(function (el) {
     var widgetName = el.getAttribute('kjs-type');
+    console.log(widgetName);
     var widget = constructors[widgetName](el);
     runSetup(widget);
     setListeners(widget);
@@ -33,16 +34,66 @@ var _k = _interopRequireDefault(require("./k"));
 var _drawers = _interopRequireDefault(require("./widgets/drawers"));
 var _extendingForm = _interopRequireDefault(require("./widgets/extending-form"));
 var _tabs = _interopRequireDefault(require("./widgets/tabs"));
+var _dependentCheckboxes = _interopRequireDefault(require("./widgets/dependent-checkboxes"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 document.addEventListener("DOMContentLoaded", function () {
   (0, _k["default"])({
     drawers: _drawers["default"],
     extendingForm: _extendingForm["default"],
-    tabs: _tabs["default"]
+    tabs: _tabs["default"],
+    dependentCheckboxes: _dependentCheckboxes["default"]
   }, document);
 });
 
-},{"./k":1,"./widgets/drawers":3,"./widgets/extending-form":4,"./widgets/tabs":5}],3:[function(require,module,exports){
+},{"./k":1,"./widgets/dependent-checkboxes":3,"./widgets/drawers":4,"./widgets/extending-form":5,"./widgets/tabs":6}],3:[function(require,module,exports){
+"use strict";
+
+function dependentCheckboxes(widget) {
+  var mainBox = widget.querySelector('[name=books]');
+  var subBoxes = widget.querySelectorAll('[name=book]');
+  function handleMainBox() {
+    mainBox.indeterminate = false;
+    subBoxes.forEach(function (box) {
+      return box.checked = mainBox.checked;
+    });
+  }
+  function handleSubBoxes() {
+    var count = 0;
+    subBoxes.forEach(function (box) {
+      if (box.checked) ++count;
+    });
+    if (count === subBoxes.length) {
+      mainBox.checked = true;
+      mainBox.indeterminate = false;
+    } else if (count === 0) {
+      mainBox.checked = false;
+      mainBox.indeterminate = false;
+    } else {
+      mainBox.checked = false;
+      mainBox.indeterminate = true;
+    }
+    if (!mainBox.indeterminate) handleMainBox();
+  }
+  var actions = [{
+    element: mainBox,
+    event: 'click',
+    handler: handleMainBox
+  }];
+  subBoxes.forEach(function (box) {
+    actions.push({
+      element: box,
+      event: 'click',
+      handler: handleSubBoxes
+    });
+  });
+  return {
+    actions: actions
+  };
+}
+;
+module.exports = dependentCheckboxes;
+
+},{}],4:[function(require,module,exports){
 "use strict";
 
 function accordion(widget) {
@@ -72,7 +123,7 @@ function accordion(widget) {
 }
 module.exports = accordion;
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 
 function extendingForm(widget) {
@@ -99,7 +150,7 @@ function extendingForm(widget) {
 }
 module.exports = extendingForm;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 function tabs(widget) {

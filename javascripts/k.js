@@ -13,6 +13,7 @@ function kjs(constructors, page) {
 
   widgetElements.forEach((el) => {
     const widgetName = el.getAttribute('kjs-type')
+    console.log(widgetName)
     const widget = constructors[widgetName](el);
 
     runSetup(widget);
