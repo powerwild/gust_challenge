@@ -27,7 +27,7 @@
           <label><input type="checkbox" name="try">I decline the invitation to try said eggs and ham.</label>
         </div>
         <div kjs-role="extension" kjs-trigger="no">
-          <label>Check all that apply:</label>
+          <label>Check one:</label>
           <label><input type="radio" name="where" value="boat"/>I would eat them in a boat.</label>
           <label><input type="radio" name="where" value="goat"/>I would eat them with a goat.</label>
           <label><input type="radio" name="where" value="herethere"/>I would eat them here or there.</label>
@@ -70,7 +70,18 @@
 
     <section class="example">
       <h2>Linked Checkboxes</h2>
-      TODO
+      <div kjs-type="dependentCheckboxes">
+        <label>Select/Unselect all</label>
+        <label><input type="checkbox" name="books">I like Dr. Suess books.</label>
+        <div>
+          <label>Select any</label>
+          <label><input type="checkbox" name="book" value="horton">Horton hears a Who!</label>
+          <label><input type="checkbox" name="book" value="zoo">If I ran the zoo</label>
+          <label><input type="checkbox" name="book" value="sneetchies">The Sneetchies</label>
+          <label><input type="checkbox" name="book" value="fox">Fox in socks</label>
+          <label><input type="checkbox" name="book" value="wocket">There's a Wocket in my Pocket!</label>
+        </div>
+      </div>
     </section>
 
   </body>
